@@ -121,11 +121,11 @@ class User(object):
 	# for the given user suffix. Suffix must be a valid id64 or customURL.
 	# returns a list of abbreviations that correspond to the user's friends steam URLs
 	def get_all_friends_urls(self):
-		full_rul = "https://steamcommunity.com/profiles/" + self.steamid64 + "/friends/"
+		full_url = "https://steamcommunity.com/profiles/" + self.steamid64 + "/friends/"
 		if full_url not in CACHE_DICTION:
 			page_content = requests.get(full_url)
 			page_content = page_content.text
-			CACHE_DICTION[full_url] = player_object
+			CACHE_DICTION[full_url] = page_content
 			dumped_json_cache = json.dumps(CACHE_DICTION)
 			fw = open(CACHE_FNAME, 'w')
 			fw.write(dumped_json_cache)
@@ -384,7 +384,7 @@ def graph_user_playtime(id64):
 
 	trace = go.Pie(labels=labels, values=values)
 
-	py.plot([trace], filename='basic_pie_chart')
+	py.plot([trace], filename='game_distribution')
 	
 
 
@@ -513,7 +513,7 @@ def best_game_for_price():
         width=2000)
 	data=[trace0]
 	fig = go.Figure(data=data, layout=layout)
-	py.plot(fig, filename = 'basic-line')
+	py.plot(fig, filename = 'steam_games_per_dollar')
 
 
 
@@ -544,6 +544,22 @@ def initialize_and_populate():
 					pass
 
 def main():
+	conn = sqlite3.connect(DBNAME)
+	cur = conn.cursor()
+	check_statement = '''
+	SELECT *
+	FROM Games'''
+	try:
+		cur.execute(check_statement)
+		conn.commit()
+		print("succeeded")
+	except:
+		print("No database detected... Let's populate it!")
+		initialize_and_populate()
+		print("failed")
+
+	conn.close()
+
 	if (len(sys.argv) > 1):
 		initialize_and_populate()
 	

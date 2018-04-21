@@ -42,8 +42,11 @@ The functions utilizing plotly all make SQL commands and use the results to be g
 
 
 ## How to run:
+
 If you would like to start the program off with a completely new database, you should run with :
 > python steam_games.py --init
+
+WHEN INITIALIZING, THE DATA WILL TAKE A VERY LONG TIME TO RUN, PLEASE BE PATIENT
 
 If you would like to run the program normally, just type: 
 > python steam_games.py

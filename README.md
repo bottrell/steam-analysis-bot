@@ -42,8 +42,10 @@ The functions utilizing plotly all make SQL commands and use the results to be g
 
 
 ## How to run:
-If you would like to start the program off with a completely new database, you should run with > python steam_games.py --init
-If you would like to run the program normally, just type > python steam_games.py
+If you would like to start the program off with a completely new database, you should run with :
+> python steam_games.py --init
+If you would like to run the program normally, just type: 
+> python steam_games.py
 
 Within the program, there are 6 main options in the main menu. Pressing the numbers corresponding the the menu prompt will create a graph for that option. 
 Inputting "6" will quit the program. 
